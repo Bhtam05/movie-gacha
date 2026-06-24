@@ -1,0 +1,80 @@
+/* Danh sách đã xem */
+
+#watched-button.watched,
+.detail-secondary-button.watched {
+  color: #b9ffd8;
+  background: rgba(42, 199, 112, 0.14);
+  border-color: rgba(42, 199, 112, 0.38);
+}
+
+#watched-button.watched:hover,
+.detail-secondary-button.watched:hover {
+  background: rgba(42, 199, 112, 0.2);
+}
+
+.watched-count-badge {
+  color: #b9ffd8;
+  background: rgba(42, 199, 112, 0.13);
+  border: 1px solid rgba(42, 199, 112, 0.25);
+}
+
+.watched-side-card {
+  border-color: rgba(42, 199, 112, 0.11);
+}
+
+.watched-list-item {
+  position: relative;
+}
+
+.watched-list-item .list-poster {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(42, 199, 112, 0.92),
+      rgba(21, 105, 67, 0.94)
+    );
+}
+
+.watched-date {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: #77dca2;
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-watched-button {
+  display: grid;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #a7b0be;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.remove-watched-button:hover {
+  color: #ffe4e9;
+  background: rgba(255, 61, 95, 0.16);
+  border-color: rgba(255, 61, 95, 0.31);
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 650px) {
+  #watched-button {
+    min-width: 0;
+  }
+}

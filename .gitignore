@@ -1,0 +1,26 @@
+# Thư viện Node.js
+node_modules/
+
+# Biến môi trường và API key
+.env
+.env.*
+!.env.example
+
+# Log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# File hệ thống
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# File nén và tạm
+*.zip
+*.rar
+temp/
+tmp/

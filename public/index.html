@@ -1,0 +1,3376 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Website random phim" />
+
+    <title>Random Phim</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="advanced-filters.css" />
+    <link rel="stylesheet" href="detail-modal.css" />
+    <link rel="stylesheet" href="watched-list.css" />
+    <link rel="stylesheet" href="exclusion-mode.css" />
+    <link rel="stylesheet" href="auth-sync.css" />
+  </head>
+
+  <body>
+    <div class="background-effect background-effect-one"></div>
+    <div class="background-effect background-effect-two"></div>
+
+    <main class="app">
+      <!-- Header -->
+      <header class="hero">
+        <div class="brand-badge">
+          <span class="brand-icon">🎬</span>
+          <span>Movie Gacha</span>
+        </div>
+
+        <div class="account-toolbar">
+          <button id="account-button" class="account-button" type="button">
+            <span id="account-avatar" class="account-avatar">👤</span>
+
+            <span class="account-copy">
+              <strong id="account-label">Đăng nhập</strong>
+              <small id="account-subtitle">Đồng bộ nhiều thiết bị</small>
+            </span>
+          </button>
+
+          <button
+            id="sync-now-button"
+            class="sync-now-button hidden"
+            type="button"
+            title="Đồng bộ ngay"
+          >
+            ↻
+          </button>
+
+          <span id="sync-status" class="sync-status sync-status-guest">
+            Chỉ lưu trên thiết bị
+          </span>
+        </div>
+
+        <h1>
+          <span>Random Phim</span>
+        </h1>
+
+        <p class="hero-description">
+          Không biết xem gì thì để số phận quyết định.
+          <br />
+          Nhập điều kiện rồi quất thôi.
+        </p>
+      </header>
+
+      <!-- Search -->
+      <section class="search-section">
+        <form id="random-form" class="search-form">
+          <div class="input-wrapper">
+            <span class="input-icon">🔎</span>
+
+            <input
+              id="movie-input"
+              type="text"
+              placeholder="Ví dụ: Random + kinh dị + IMDb trên 7.5"
+              value="Random"
+              autocomplete="off"
+              maxlength="200"
+            />
+          </div>
+
+          <button id="random-button" type="submit">
+            <span class="button-text">Quất phim</span>
+            <span class="button-icon">🎲</span>
+          </button>
+        </form>
+
+        <div class="quick-filter-header">
+          <span>Chọn nhanh:</span>
+
+          <button id="clear-filter-button" type="button">Xóa điều kiện</button>
+        </div>
+
+        <div class="quick-filters">
+          <button type="button" data-filter="kinh dị">👻 Kinh dị</button>
+
+          <button type="button" data-filter="hành động">💥 Hành động</button>
+
+          <button type="button" data-filter="tâm lý">🧠 Tâm lý</button>
+
+          <button type="button" data-filter="trinh thám">🔍 Trinh thám</button>
+
+          <button type="button" data-filter="Nhật Bản">🗾 Nhật Bản</button>
+
+          <button type="button" data-filter="Hàn Quốc">🇰🇷 Hàn Quốc</button>
+
+          <button type="button" data-filter="IMDb trên 8.0">⭐ IMDb 8+</button>
+
+          <button type="button" data-filter="phim bộ">📺 Phim bộ</button>
+        </div>
+
+        <div class="advanced-filter-area">
+          <button
+            id="advanced-filter-toggle"
+            class="advanced-filter-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="advanced-filter-panel"
+          >
+            <span>⚙️ Bộ lọc nâng cao</span>
+            <span class="advanced-toggle-meta">
+              <span
+                id="advanced-filter-count"
+                class="advanced-filter-count hidden"
+                >0</span
+              >
+              <span id="advanced-filter-arrow" class="advanced-filter-arrow"
+                >⌄</span
+              >
+            </span>
+          </button>
+
+          <div
+            id="advanced-filter-summary"
+            class="advanced-filter-summary hidden"
+          ></div>
+
+          <section
+            id="advanced-filter-panel"
+            class="advanced-filter-panel hidden"
+          >
+            <div class="advanced-filter-grid">
+              <label class="filter-field">
+                <span>Loại nội dung</span>
+                <select id="filter-content-type">
+                  <option value="">Tất cả</option>
+                  <option value="phim lẻ">Phim lẻ</option>
+                  <option value="phim bộ">Phim bộ</option>
+                </select>
+              </label>
+
+              <label class="filter-field">
+                <span>Quốc gia</span>
+                <select id="filter-country">
+                  <option value="">Tất cả</option>
+                  <option value="Mỹ">Mỹ</option>
+                  <option value="Anh">Anh</option>
+                  <option value="Nhật Bản">Nhật Bản</option>
+                  <option value="Hàn Quốc">Hàn Quốc</option>
+                  <option value="Việt Nam">Việt Nam</option>
+                  <option value="Trung Quốc">Trung Quốc</option>
+                  <option value="Hồng Kông">Hồng Kông</option>
+                  <option value="Đài Loan">Đài Loan</option>
+                  <option value="Thái Lan">Thái Lan</option>
+                  <option value="Pháp">Pháp</option>
+                  <option value="Đức">Đức</option>
+                  <option value="Tây Ban Nha">Tây Ban Nha</option>
+                  <option value="Ấn Độ">Ấn Độ</option>
+                </select>
+              </label>
+
+              <label class="filter-field">
+                <span>Thể loại</span>
+                <select id="filter-genre">
+                  <option value="">Tất cả</option>
+                  <option value="hành động">Hành động</option>
+                  <option value="kinh dị">Kinh dị</option>
+                  <option value="tâm lý">Tâm lý</option>
+                  <option value="trinh thám">Trinh thám</option>
+                  <option value="khoa học viễn tưởng">
+                    Khoa học viễn tưởng
+                  </option>
+                  <option value="hài">Hài</option>
+                  <option value="tình cảm">Tình cảm</option>
+                  <option value="tội phạm">Tội phạm</option>
+                  <option value="chiến tranh">Chiến tranh</option>
+                  <option value="phiêu lưu">Phiêu lưu</option>
+                </select>
+              </label>
+
+              <label class="filter-field">
+                <span>Hình thức</span>
+                <select id="filter-format">
+                  <option value="">Bất kỳ</option>
+                  <option value="phim người đóng, không anime, không hoạt hình">
+                    Người đóng
+                  </option>
+                  <option value="anime hoặc phim hoạt hình">
+                    Anime / hoạt hình
+                  </option>
+                </select>
+              </label>
+
+              <label class="filter-field">
+                <span>Từ năm</span>
+                <input
+                  id="filter-year-from"
+                  type="number"
+                  min="1900"
+                  max="2030"
+                  placeholder="Ví dụ: 2000"
+                  inputmode="numeric"
+                />
+              </label>
+
+              <label class="filter-field">
+                <span>Đến năm</span>
+                <input
+                  id="filter-year-to"
+                  type="number"
+                  min="1900"
+                  max="2030"
+                  placeholder="Ví dụ: 2026"
+                  inputmode="numeric"
+                />
+              </label>
+
+              <label class="filter-field">
+                <span>IMDb tối thiểu</span>
+                <select id="filter-imdb">
+                  <option value="">Không giới hạn</option>
+                  <option value="6.0">6.0+</option>
+                  <option value="7.0">7.0+</option>
+                  <option value="7.5">7.5+</option>
+                  <option value="8.0">8.0+</option>
+                  <option value="8.5">8.5+</option>
+                </select>
+              </label>
+
+              <label class="filter-field">
+                <span>Thời lượng tối đa</span>
+                <select id="filter-duration">
+                  <option value="">Không giới hạn</option>
+                  <option value="90">90 phút</option>
+                  <option value="120">120 phút</option>
+                  <option value="150">150 phút</option>
+                  <option value="180">180 phút</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="advanced-filter-actions">
+              <button
+                id="reset-advanced-filters"
+                class="filter-reset-button"
+                type="button"
+              >
+                Xóa bộ lọc
+              </button>
+
+              <button
+                id="apply-advanced-filters"
+                class="filter-apply-button"
+                type="button"
+              >
+                Áp dụng
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <div class="exclusion-mode-area">
+          <button
+            id="exclusion-mode-toggle"
+            class="exclusion-mode-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="exclusion-mode-panel"
+          >
+            <span>🚫 Chế độ loại trừ</span>
+
+            <span class="exclusion-toggle-meta">
+              <span
+                id="exclusion-mode-count"
+                class="exclusion-mode-count hidden"
+              >
+                0
+              </span>
+
+              <span id="exclusion-mode-arrow" class="exclusion-mode-arrow">
+                ⌄
+              </span>
+            </span>
+          </button>
+
+          <div
+            id="exclusion-mode-summary"
+            class="exclusion-mode-summary hidden"
+          ></div>
+
+          <section
+            id="exclusion-mode-panel"
+            class="exclusion-mode-panel hidden"
+          >
+            <div class="sovereignty-guard">
+              <div class="sovereignty-guard-icon">🛡️</div>
+
+              <div>
+                <strong>Bảo vệ chủ quyền Việt Nam</strong>
+
+                <p>
+                  Luôn loại phim tuyên truyền đường lưỡi bò, phủ nhận hoặc xuyên
+                  tạc chủ quyền và toàn vẹn lãnh thổ Việt Nam.
+                </p>
+              </div>
+
+              <span>LUÔN BẬT</span>
+            </div>
+
+            <label class="exclusion-enabled-row">
+              <span>
+                <strong>Bật loại trừ cá nhân</strong>
+                <small> Giữ lại danh sách nhưng có thể tạm tắt khi cần. </small>
+              </span>
+
+              <span class="exclusion-switch">
+                <input id="exclusion-enabled" type="checkbox" checked />
+
+                <span aria-hidden="true"></span>
+              </span>
+            </label>
+
+            <div class="exclusion-mode-grid">
+              <label class="exclusion-field">
+                <span>Né diễn viên</span>
+
+                <textarea
+                  id="exclude-actors"
+                  rows="3"
+                  maxlength="500"
+                  placeholder="Ví dụ: Tom Cruise, Thành Long"
+                ></textarea>
+
+                <small>Ngăn cách bằng dấu phẩy hoặc xuống dòng.</small>
+              </label>
+
+              <label class="exclusion-field">
+                <span>Né quốc gia</span>
+
+                <textarea
+                  id="exclude-countries"
+                  rows="3"
+                  maxlength="300"
+                  placeholder="Ví dụ: Mỹ, Nhật Bản"
+                ></textarea>
+
+                <small>
+                  Chỉ né khi bro tự nhập; Việt Nam và Trung Quốc không còn bị
+                  cấm mặc định.
+                </small>
+              </label>
+
+              <label class="exclusion-field">
+                <span>Né thể loại</span>
+
+                <textarea
+                  id="exclude-genres"
+                  rows="3"
+                  maxlength="300"
+                  placeholder="Ví dụ: kinh dị, chiến tranh, nhạc kịch"
+                ></textarea>
+
+                <small>Có thể nhập nhiều thể loại.</small>
+              </label>
+
+              <label class="exclusion-field">
+                <span>Né năm / khoảng năm</span>
+
+                <textarea
+                  id="exclude-years"
+                  rows="3"
+                  maxlength="300"
+                  placeholder="Ví dụ: 2020, 1990-1999, trước 1980, sau 2018"
+                ></textarea>
+
+                <small> Hỗ trợ năm đơn, khoảng năm, “trước” và “sau”. </small>
+              </label>
+
+              <label class="exclusion-field exclusion-field-wide">
+                <span>Né tên phim hoặc từ khóa</span>
+
+                <textarea
+                  id="exclude-keywords"
+                  rows="3"
+                  maxlength="500"
+                  placeholder="Ví dụ: remake, zombie, Marvel, tên một bộ phim cụ thể"
+                ></textarea>
+
+                <small>
+                  So khớp tên phim, nội dung, thể loại và thông tin nổi bật.
+                </small>
+              </label>
+            </div>
+
+            <div class="exclusion-mode-actions">
+              <button
+                id="reset-exclusion-mode"
+                class="exclusion-reset-button"
+                type="button"
+              >
+                Xóa loại trừ
+              </button>
+
+              <button
+                id="apply-exclusion-mode"
+                class="exclusion-apply-button"
+                type="button"
+              >
+                Áp dụng
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div class="content-layout">
+        <!-- Main result -->
+        <section class="result-section">
+          <!-- Empty state -->
+          <div id="empty-state" class="state-card empty-state">
+            <div class="empty-icon">🎞️</div>
+
+            <h2>Phim nào sẽ được chọn?</h2>
+
+            <p>
+              Nhập điều kiện phía trên hoặc giữ nguyên
+              <strong>Random</strong>
+              để quay toàn bộ phim.
+            </p>
+          </div>
+
+          <!-- Loading -->
+          <div id="loading-state" class="state-card loading-state hidden">
+            <div class="dice-loader">
+              <span>🎲</span>
+            </div>
+
+            <h2>Đang lục tung kho phim...</h2>
+
+            <p>Chờ tí, đang lựa hàng ngon cho bạn.</p>
+
+            <div class="loading-lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div id="error-state" class="state-card error-state hidden">
+            <div class="error-icon">💀</div>
+
+            <h2>Có biến rồi bro</h2>
+
+            <p id="error-message">Không thể gọi API. Kiểm tra lại server.</p>
+
+            <button id="retry-button" type="button">Thử lại</button>
+          </div>
+
+          <!-- Movie card -->
+          <article id="movie-card" class="movie-card hidden">
+            <div class="movie-visual">
+              <img
+                id="movie-poster"
+                class="movie-poster hidden"
+                src=""
+                alt=""
+              />
+
+              <div id="poster-placeholder" class="poster-placeholder">
+                <span class="poster-label">Tonight's pick</span>
+
+                <div id="poster-letter" class="poster-letter">M</div>
+
+                <p id="poster-title">Movie</p>
+              </div>
+
+              <div class="poster-overlay"></div>
+
+              <span class="random-label"> Random Pick </span>
+            </div>
+
+            <div class="movie-content">
+              <div class="movie-heading">
+                <div>
+                  <p class="eyebrow">Bộ phim được chọn</p>
+
+                  <h2 id="movie-title">Tên phim</h2>
+
+                  <p id="movie-vietnamese-title" class="vietnamese-title">
+                    Tên tiếng Việt
+                  </p>
+                </div>
+
+                <div id="imdb-score" class="imdb-score">
+                  <span>IMDb</span>
+                  <strong>8.0</strong>
+                </div>
+              </div>
+
+              <div class="movie-tags">
+                <span id="movie-year"> 📅 Năm </span>
+
+                <span id="movie-country"> 🌍 Quốc gia </span>
+
+                <span id="movie-genre"> 🎭 Thể loại </span>
+              </div>
+
+              <div class="movie-information">
+                <div class="information-block">
+                  <h3>🎬 Diễn viên</h3>
+
+                  <p id="movie-cast">Đang cập nhật</p>
+                </div>
+
+                <div class="information-block">
+                  <h3>📖 Nội dung</h3>
+
+                  <p id="movie-description">Đang cập nhật</p>
+                </div>
+
+                <div class="reason-box">
+                  <h3>💡 Vì sao nên xem?</h3>
+
+                  <p id="movie-reason">Đang cập nhật</p>
+                </div>
+
+                <div class="vibe-box">
+                  <h3>🖼️ Vibe của phim</h3>
+
+                  <p id="movie-vibe">Đang cập nhật</p>
+                </div>
+              </div>
+
+              <div class="movie-actions">
+                <button
+                  id="random-again-button"
+                  class="primary-action"
+                  type="button"
+                >
+                  <span>🎲</span>
+                  Random phim khác
+                </button>
+
+                <button
+                  id="trailer-button"
+                  class="secondary-action"
+                  type="button"
+                >
+                  <span>▶️</span>
+                  Trailer
+                </button>
+
+                <button
+                  id="detail-button"
+                  class="secondary-action"
+                  type="button"
+                >
+                  <span>ℹ️</span>
+                  Chi tiết
+                </button>
+
+                <button
+                  id="watch-button"
+                  class="secondary-action"
+                  type="button"
+                >
+                  <span>📺</span>
+                  Xem ở đâu
+                </button>
+
+                <button
+                  id="watched-button"
+                  class="secondary-action"
+                  type="button"
+                >
+                  <span id="watched-icon">✅</span>
+                  <span id="watched-text">Đánh dấu đã xem</span>
+                </button>
+
+                <button id="save-button" class="secondary-action" type="button">
+                  <span id="save-icon">🔖</span>
+                  <span id="save-text">Lưu phim</span>
+                </button>
+
+                <button
+                  id="copy-button"
+                  class="icon-action"
+                  type="button"
+                  title="Sao chép tên phim"
+                >
+                  📋
+                </button>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <section class="side-card">
+            <div class="side-card-header">
+              <div>
+                <span class="side-icon">🕘</span>
+
+                <h2>Lịch sử random</h2>
+              </div>
+
+              <button id="clear-history-button" type="button">Xóa</button>
+            </div>
+
+            <div id="history-list" class="movie-list">
+              <p class="empty-list">Chưa random phim nào.</p>
+            </div>
+          </section>
+
+          <section class="side-card watched-side-card">
+            <div class="side-card-header">
+              <div>
+                <span class="side-icon">✅</span>
+
+                <h2>Danh sách đã xem</h2>
+              </div>
+
+              <span id="watched-count" class="count-badge watched-count-badge">
+                0
+              </span>
+            </div>
+
+            <div id="watched-list" class="movie-list">
+              <p class="empty-list">Chưa đánh dấu phim nào.</p>
+            </div>
+          </section>
+
+          <section class="side-card">
+            <div class="side-card-header">
+              <div>
+                <span class="side-icon">❤️</span>
+
+                <h2>Phim đã lưu</h2>
+              </div>
+
+              <span id="saved-count" class="count-badge"> 0 </span>
+            </div>
+
+            <div id="saved-list" class="movie-list">
+              <p class="empty-list">Chưa lưu phim nào.</p>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <footer>
+        <p>
+          🎲 Kết quả được lựa chọn bởi AI. Điểm IMDb có thể thay đổi theo thời
+          gian.
+        </p>
+      </footer>
+    </main>
+
+    <div id="auth-modal" class="auth-modal hidden" aria-hidden="true">
+      <button
+        class="auth-modal-backdrop"
+        type="button"
+        data-auth-close
+        aria-label="Đóng đăng nhập"
+      ></button>
+
+      <section
+        class="auth-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-modal-title"
+      >
+        <button
+          id="auth-close-button"
+          class="auth-close-button"
+          type="button"
+          aria-label="Đóng"
+        >
+          ×
+        </button>
+
+        <div id="auth-logged-out-view">
+          <div class="auth-heading">
+            <div class="auth-heading-icon">☁️</div>
+
+            <div>
+              <p>Movie Gacha Cloud</p>
+              <h2 id="auth-modal-title">Đăng nhập để đồng bộ</h2>
+              <span>
+                Phim đã lưu, đã xem, lịch sử và bộ lọc sẽ dùng chung trên laptop
+                lẫn điện thoại.
+              </span>
+            </div>
+          </div>
+
+          <div id="auth-setup-warning" class="auth-setup-warning hidden">
+            <strong>Chưa cấu hình Supabase</strong>
+            <p>
+              Thêm SUPABASE_URL và SUPABASE_PUBLISHABLE_KEY vào file .env, rồi
+              khởi động lại server.
+            </p>
+          </div>
+
+          <div class="auth-tabs" role="tablist">
+            <button
+              id="auth-login-tab"
+              class="active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+            >
+              Đăng nhập
+            </button>
+
+            <button
+              id="auth-signup-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+            >
+              Tạo tài khoản
+            </button>
+          </div>
+
+          <form id="auth-form" class="auth-form">
+            <label>
+              <span>Email</span>
+              <input
+                id="auth-email"
+                type="email"
+                autocomplete="email"
+                placeholder="bro@example.com"
+                required
+              />
+            </label>
+
+            <label>
+              <span>Mật khẩu</span>
+              <input
+                id="auth-password"
+                type="password"
+                minlength="6"
+                autocomplete="current-password"
+                placeholder="Tối thiểu 6 ký tự"
+                required
+              />
+            </label>
+
+            <button
+              id="auth-submit-button"
+              class="auth-submit-button"
+              type="submit"
+            >
+              Đăng nhập
+            </button>
+          </form>
+
+          <div id="auth-divider" class="auth-divider">
+            <span>hoặc</span>
+          </div>
+
+          <button
+            id="google-login-button"
+            class="google-login-button hidden"
+            type="button"
+          >
+            <span>G</span>
+            Đăng nhập bằng Google
+          </button>
+
+          <p id="auth-message" class="auth-message" aria-live="polite"></p>
+
+          <p class="auth-privacy-note">
+            Chế độ khách vẫn hoạt động bình thường. Chỉ dữ liệu Movie Gacha được
+            đồng bộ; mật khẩu do Supabase Auth xử lý.
+          </p>
+        </div>
+
+        <div id="auth-logged-in-view" class="hidden">
+          <div class="auth-user-card">
+            <div id="auth-user-avatar" class="auth-user-avatar">M</div>
+
+            <div>
+              <p>Đang đăng nhập</p>
+              <strong id="auth-user-email">bro@example.com</strong>
+              <span id="auth-user-id-short"></span>
+            </div>
+          </div>
+
+          <div class="auth-sync-overview">
+            <div>
+              <strong id="auth-watched-total">0</strong>
+              <span>Đã xem</span>
+            </div>
+
+            <div>
+              <strong id="auth-saved-total">0</strong>
+              <span>Đã lưu</span>
+            </div>
+
+            <div>
+              <strong id="auth-seen-total">0</strong>
+              <span>Chống trùng</span>
+            </div>
+          </div>
+
+          <div class="auth-user-actions">
+            <button id="auth-sync-button" type="button">↻ Đồng bộ ngay</button>
+
+            <button
+              id="auth-logout-button"
+              class="auth-logout-button"
+              type="button"
+            >
+              Đăng xuất
+            </button>
+          </div>
+
+          <p class="auth-device-note">
+            Khi đổi thiết bị, đăng nhập cùng tài khoản. Web sẽ kéo dữ liệu mới
+            nhất và tự đồng bộ khi có thay đổi.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <div id="detail-modal" class="detail-modal hidden" aria-hidden="true">
+      <button
+        class="detail-modal-backdrop"
+        type="button"
+        data-detail-close
+        aria-label="Đóng khung chi tiết"
+      ></button>
+
+      <section
+        class="detail-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="detail-title"
+      >
+        <button
+          id="detail-close-button"
+          class="detail-close-button"
+          type="button"
+          aria-label="Đóng"
+        >
+          ×
+        </button>
+
+        <div id="detail-loading" class="detail-state">
+          <div class="detail-loader">🎬</div>
+          <h2>Đang đào hồ sơ phim...</h2>
+          <p>TMDB đang gom đủ thông tin cho bro.</p>
+        </div>
+
+        <div id="detail-error" class="detail-state hidden">
+          <div class="detail-error-icon">💀</div>
+          <h2>Không tải được chi tiết</h2>
+          <p id="detail-error-message">Kiểm tra kết nối TMDB rồi thử lại.</p>
+          <button id="detail-retry-button" type="button">Thử lại</button>
+        </div>
+
+        <div id="detail-content" class="detail-content hidden">
+          <header class="detail-hero">
+            <img
+              id="detail-backdrop"
+              class="detail-backdrop-image hidden"
+              src=""
+              alt=""
+            />
+
+            <div class="detail-backdrop-fallback"></div>
+            <div class="detail-hero-overlay"></div>
+
+            <div class="detail-hero-content">
+              <img
+                id="detail-poster"
+                class="detail-poster hidden"
+                src=""
+                alt=""
+              />
+
+              <div id="detail-poster-fallback" class="detail-poster-fallback">
+                🎞️
+              </div>
+
+              <div class="detail-heading">
+                <p id="detail-media-label" class="detail-eyebrow">Phim</p>
+
+                <h2 id="detail-title">Tên phim</h2>
+
+                <p id="detail-subtitle" class="detail-subtitle"></p>
+                <p id="detail-tagline" class="detail-tagline"></p>
+
+                <div id="detail-badges" class="detail-badges"></div>
+
+                <div class="detail-main-actions">
+                  <button
+                    id="detail-trailer-button"
+                    class="detail-primary-button"
+                    type="button"
+                  >
+                    ▶️ Xem trailer
+                  </button>
+
+                  <button
+                    id="detail-watch-button"
+                    class="detail-secondary-button"
+                    type="button"
+                  >
+                    📺 Xem ở đâu
+                  </button>
+
+                  <button
+                    id="detail-watched-button"
+                    class="detail-secondary-button"
+                    type="button"
+                  >
+                    ✅ Đánh dấu đã xem
+                  </button>
+
+                  <button
+                    id="detail-save-button"
+                    class="detail-secondary-button"
+                    type="button"
+                  >
+                    🔖 Lưu phim
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="detail-body">
+            <section class="detail-overview-section">
+              <h3>📖 Nội dung</h3>
+              <p id="detail-overview">Chưa có nội dung.</p>
+            </section>
+
+            <div class="detail-grid">
+              <section class="detail-panel">
+                <h3>🎥 Thông tin</h3>
+
+                <dl class="detail-facts">
+                  <div>
+                    <dt>Đạo diễn / Sáng tạo</dt>
+                    <dd id="detail-director">Chưa rõ</dd>
+                  </div>
+
+                  <div>
+                    <dt>Ngày phát hành</dt>
+                    <dd id="detail-release-date">Chưa rõ</dd>
+                  </div>
+
+                  <div>
+                    <dt>Thời lượng</dt>
+                    <dd id="detail-runtime">Chưa rõ</dd>
+                  </div>
+
+                  <div>
+                    <dt>Quốc gia</dt>
+                    <dd id="detail-countries">Chưa rõ</dd>
+                  </div>
+
+                  <div>
+                    <dt>Ngôn ngữ</dt>
+                    <dd id="detail-languages">Chưa rõ</dd>
+                  </div>
+
+                  <div>
+                    <dt>Trạng thái</dt>
+                    <dd id="detail-status">Chưa rõ</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section class="detail-panel">
+                <h3>⭐ Đánh giá & thể loại</h3>
+
+                <div class="detail-score-row">
+                  <div class="detail-score">
+                    <span>TMDB</span>
+                    <strong id="detail-tmdb-score">N/A</strong>
+                  </div>
+
+                  <div class="detail-score detail-score-imdb">
+                    <span>IMDb</span>
+                    <strong id="detail-imdb-score">N/A</strong>
+                  </div>
+                </div>
+
+                <div id="detail-genres" class="detail-genres"></div>
+
+                <p id="detail-tv-stats" class="detail-tv-stats hidden"></p>
+              </section>
+            </div>
+
+            <section id="detail-watch-section" class="detail-watch-section">
+              <div class="detail-section-heading">
+                <div>
+                  <h3>📺 Xem ở đâu?</h3>
+                  <p class="detail-watch-subtitle">
+                    Dịch vụ phát hành được ghi nhận tại Việt Nam.
+                  </p>
+                </div>
+
+                <span id="detail-watch-region">VN</span>
+              </div>
+
+              <div id="detail-watch-loading" class="detail-watch-state">
+                <div class="detail-watch-spinner">🍿</div>
+                <p>Đang tìm nền tảng xem phim...</p>
+              </div>
+
+              <div id="detail-watch-error" class="detail-watch-state hidden">
+                <p id="detail-watch-error-message">Chưa tải được nơi xem.</p>
+
+                <button id="detail-watch-retry-button" type="button">
+                  Thử lại
+                </button>
+              </div>
+
+              <div id="detail-watch-empty" class="detail-watch-state hidden">
+                <p>Chưa tìm thấy dịch vụ phát hành hợp pháp tại Việt Nam.</p>
+
+                <a
+                  id="detail-watch-search-link"
+                  class="detail-watch-search-link"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  🔍 Tìm nơi xem hợp pháp
+                </a>
+              </div>
+
+              <div
+                id="detail-watch-content"
+                class="detail-watch-content hidden"
+              >
+                <div id="detail-watch-groups" class="detail-watch-groups"></div>
+
+                <a
+                  id="detail-watch-link"
+                  class="detail-watch-link"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Mở trang nơi xem ↗
+                </a>
+
+                <p class="detail-watch-attribution">
+                  Dữ liệu nhà cung cấp từ JustWatch thông qua TMDB.
+                </p>
+              </div>
+            </section>
+
+            <section class="detail-cast-section">
+              <div class="detail-section-heading">
+                <h3>🎭 Diễn viên nổi bật</h3>
+                <span id="detail-cast-count"></span>
+              </div>
+
+              <div id="detail-cast-list" class="detail-cast-list"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="trailer-modal" class="trailer-modal hidden" aria-hidden="true">
+      <button
+        class="trailer-modal-backdrop"
+        type="button"
+        data-trailer-close
+        aria-label="Đóng trailer"
+      ></button>
+
+      <section
+        class="trailer-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="trailer-modal-title"
+      >
+        <header class="trailer-header">
+          <div>
+            <p>TRAILER</p>
+            <h2 id="trailer-modal-title">Đang tải trailer...</h2>
+          </div>
+
+          <button
+            id="trailer-close-button"
+            class="trailer-close-button"
+            type="button"
+            aria-label="Đóng trailer"
+          >
+            ×
+          </button>
+        </header>
+
+        <div id="trailer-loading" class="trailer-state">
+          <div class="trailer-loader">🍿</div>
+          <h3>Đang tìm trailer chính thức...</h3>
+          <p>TMDB đang kiểm tra video phù hợp cho bro.</p>
+        </div>
+
+        <div id="trailer-error" class="trailer-state hidden">
+          <div class="trailer-state-icon">💀</div>
+          <h3>Không tải được trailer</h3>
+          <p id="trailer-error-message">
+            Thử lại hoặc mở kết quả tìm kiếm trên YouTube.
+          </p>
+
+          <div class="trailer-state-actions">
+            <button id="trailer-retry-button" type="button">Thử lại</button>
+
+            <a
+              id="trailer-search-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Tìm trên YouTube ↗
+            </a>
+          </div>
+        </div>
+
+        <div id="trailer-player-wrap" class="trailer-player-wrap hidden">
+          <div class="trailer-video-frame">
+            <iframe
+              id="trailer-player"
+              src=""
+              title="YouTube trailer"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowfullscreen
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          </div>
+
+          <div class="trailer-player-footer">
+            <p id="trailer-video-name">Trailer chính thức</p>
+
+            <a
+              id="trailer-youtube-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Mở trên YouTube ↗
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast">
+      <span id="toast-icon">✅</span>
+      <span id="toast-message">Thành công</span>
+    </div>
+
+    <script>
+      const form = document.getElementById("random-form");
+      const movieInput = document.getElementById("movie-input");
+      const randomButton = document.getElementById("random-button");
+      const randomButtonText = randomButton.querySelector(".button-text");
+      const randomButtonIcon = randomButton.querySelector(".button-icon");
+
+      const emptyState = document.getElementById("empty-state");
+      const loadingState = document.getElementById("loading-state");
+      const errorState = document.getElementById("error-state");
+      const errorMessage = document.getElementById("error-message");
+      const movieCard = document.getElementById("movie-card");
+
+      const moviePoster = document.getElementById("movie-poster");
+      const posterPlaceholder = document.getElementById("poster-placeholder");
+      const posterLetter = document.getElementById("poster-letter");
+      const posterTitle = document.getElementById("poster-title");
+
+      const movieTitle = document.getElementById("movie-title");
+      const movieVietnameseTitle = document.getElementById(
+        "movie-vietnamese-title",
+      );
+      const imdbScore = document.getElementById("imdb-score");
+      const movieYear = document.getElementById("movie-year");
+      const movieCountry = document.getElementById("movie-country");
+      const movieGenre = document.getElementById("movie-genre");
+      const movieCast = document.getElementById("movie-cast");
+      const movieDescription = document.getElementById("movie-description");
+      const movieReason = document.getElementById("movie-reason");
+      const movieVibe = document.getElementById("movie-vibe");
+
+      const randomAgainButton = document.getElementById("random-again-button");
+      const trailerButton = document.getElementById("trailer-button");
+      const detailButton = document.getElementById("detail-button");
+      const watchButton = document.getElementById("watch-button");
+      const watchedButton = document.getElementById("watched-button");
+      const watchedIcon = document.getElementById("watched-icon");
+      const watchedText = document.getElementById("watched-text");
+      const saveButton = document.getElementById("save-button");
+      const saveIcon = document.getElementById("save-icon");
+      const saveText = document.getElementById("save-text");
+      const copyButton = document.getElementById("copy-button");
+      const retryButton = document.getElementById("retry-button");
+
+      const detailModal = document.getElementById("detail-modal");
+      const detailCloseButton = document.getElementById("detail-close-button");
+      const detailLoading = document.getElementById("detail-loading");
+      const detailError = document.getElementById("detail-error");
+      const detailErrorMessage = document.getElementById(
+        "detail-error-message",
+      );
+      const detailRetryButton = document.getElementById("detail-retry-button");
+      const detailContent = document.getElementById("detail-content");
+      const detailBackdrop = document.getElementById("detail-backdrop");
+      const detailPoster = document.getElementById("detail-poster");
+      const detailPosterFallback = document.getElementById(
+        "detail-poster-fallback",
+      );
+      const detailMediaLabel = document.getElementById("detail-media-label");
+      const detailTitle = document.getElementById("detail-title");
+      const detailSubtitle = document.getElementById("detail-subtitle");
+      const detailTagline = document.getElementById("detail-tagline");
+      const detailBadges = document.getElementById("detail-badges");
+      const detailTrailerButton = document.getElementById(
+        "detail-trailer-button",
+      );
+      const detailWatchButton = document.getElementById("detail-watch-button");
+      const detailWatchedButton = document.getElementById(
+        "detail-watched-button",
+      );
+      const detailSaveButton = document.getElementById("detail-save-button");
+      const detailOverview = document.getElementById("detail-overview");
+      const detailDirector = document.getElementById("detail-director");
+      const detailReleaseDate = document.getElementById("detail-release-date");
+      const detailRuntime = document.getElementById("detail-runtime");
+      const detailCountries = document.getElementById("detail-countries");
+      const detailLanguages = document.getElementById("detail-languages");
+      const detailStatus = document.getElementById("detail-status");
+      const detailTmdbScore = document.getElementById("detail-tmdb-score");
+      const detailImdbScore = document.getElementById("detail-imdb-score");
+      const detailGenres = document.getElementById("detail-genres");
+      const detailTvStats = document.getElementById("detail-tv-stats");
+      const detailCastCount = document.getElementById("detail-cast-count");
+      const detailCastList = document.getElementById("detail-cast-list");
+
+      const detailWatchSection = document.getElementById(
+        "detail-watch-section",
+      );
+      const detailWatchRegion = document.getElementById("detail-watch-region");
+      const detailWatchLoading = document.getElementById(
+        "detail-watch-loading",
+      );
+      const detailWatchError = document.getElementById("detail-watch-error");
+      const detailWatchErrorMessage = document.getElementById(
+        "detail-watch-error-message",
+      );
+      const detailWatchRetryButton = document.getElementById(
+        "detail-watch-retry-button",
+      );
+      const detailWatchEmpty = document.getElementById("detail-watch-empty");
+      const detailWatchSearchLink = document.getElementById(
+        "detail-watch-search-link",
+      );
+      const detailWatchContent = document.getElementById(
+        "detail-watch-content",
+      );
+      const detailWatchGroups = document.getElementById("detail-watch-groups");
+      const detailWatchLink = document.getElementById("detail-watch-link");
+
+      const trailerModal = document.getElementById("trailer-modal");
+      const trailerCloseButton = document.getElementById(
+        "trailer-close-button",
+      );
+      const trailerLoading = document.getElementById("trailer-loading");
+      const trailerError = document.getElementById("trailer-error");
+      const trailerErrorMessage = document.getElementById(
+        "trailer-error-message",
+      );
+      const trailerRetryButton = document.getElementById(
+        "trailer-retry-button",
+      );
+      const trailerSearchLink = document.getElementById("trailer-search-link");
+      const trailerPlayerWrap = document.getElementById("trailer-player-wrap");
+      const trailerPlayer = document.getElementById("trailer-player");
+      const trailerModalTitle = document.getElementById("trailer-modal-title");
+      const trailerVideoName = document.getElementById("trailer-video-name");
+      const trailerYoutubeLink = document.getElementById(
+        "trailer-youtube-link",
+      );
+
+      const historyList = document.getElementById("history-list");
+      const watchedList = document.getElementById("watched-list");
+      const watchedCount = document.getElementById("watched-count");
+      const savedList = document.getElementById("saved-list");
+      const savedCount = document.getElementById("saved-count");
+
+      const clearFilterButton = document.getElementById("clear-filter-button");
+      const clearHistoryButton = document.getElementById(
+        "clear-history-button",
+      );
+
+      const advancedFilterToggle = document.getElementById(
+        "advanced-filter-toggle",
+      );
+      const advancedFilterPanel = document.getElementById(
+        "advanced-filter-panel",
+      );
+      const advancedFilterArrow = document.getElementById(
+        "advanced-filter-arrow",
+      );
+      const advancedFilterCount = document.getElementById(
+        "advanced-filter-count",
+      );
+      const advancedFilterSummary = document.getElementById(
+        "advanced-filter-summary",
+      );
+      const applyAdvancedFiltersButton = document.getElementById(
+        "apply-advanced-filters",
+      );
+      const resetAdvancedFiltersButton = document.getElementById(
+        "reset-advanced-filters",
+      );
+
+      const filterContentType = document.getElementById("filter-content-type");
+      const filterCountry = document.getElementById("filter-country");
+      const filterGenre = document.getElementById("filter-genre");
+      const filterFormat = document.getElementById("filter-format");
+      const filterYearFrom = document.getElementById("filter-year-from");
+      const filterYearTo = document.getElementById("filter-year-to");
+      const filterImdb = document.getElementById("filter-imdb");
+      const filterDuration = document.getElementById("filter-duration");
+
+      const exclusionModeToggle = document.getElementById(
+        "exclusion-mode-toggle",
+      );
+      const exclusionModePanel = document.getElementById(
+        "exclusion-mode-panel",
+      );
+      const exclusionModeArrow = document.getElementById(
+        "exclusion-mode-arrow",
+      );
+      const exclusionModeCount = document.getElementById(
+        "exclusion-mode-count",
+      );
+      const exclusionModeSummary = document.getElementById(
+        "exclusion-mode-summary",
+      );
+      const exclusionEnabled = document.getElementById("exclusion-enabled");
+      const excludeActors = document.getElementById("exclude-actors");
+      const excludeCountries = document.getElementById("exclude-countries");
+      const excludeGenres = document.getElementById("exclude-genres");
+      const excludeYears = document.getElementById("exclude-years");
+      const excludeKeywords = document.getElementById("exclude-keywords");
+      const applyExclusionModeButton = document.getElementById(
+        "apply-exclusion-mode",
+      );
+      const resetExclusionModeButton = document.getElementById(
+        "reset-exclusion-mode",
+      );
+
+      const toast = document.getElementById("toast");
+      const toastIcon = document.getElementById("toast-icon");
+      const toastMessage = document.getElementById("toast-message");
+
+      const HISTORY_KEY = "randomMovieHistory";
+      const SEEN_KEY = "randomMovieSeen";
+      const WATCHED_KEY = "watchedMovies";
+      const SAVED_KEY = "savedRandomMovies";
+      const ADVANCED_FILTER_KEY = "movieGachaAdvancedFilters";
+      const EXCLUSION_MODE_KEY = "movieGachaExclusionMode";
+      const SEEN_LIMIT = 500;
+      const WATCHED_LIMIT = 1000;
+      const RANDOM_EXCLUSION_LIMIT = 300;
+
+      let currentMovie = null;
+      let currentRequest = "Random";
+      let isLoading = false;
+      let toastTimeout;
+      let detailReturnFocus = null;
+      let trailerReturnFocus = null;
+      let currentDetailData = null;
+      let shouldScrollToWatchProviders = false;
+
+      const detailCache = new Map();
+      const watchProviderCache = new Map();
+
+      function getStorageArray(key) {
+        try {
+          const data = JSON.parse(localStorage.getItem(key));
+          return Array.isArray(data) ? data : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function notifySyncStorageChange(key) {
+        window.movieGachaSync?.trackStorageChange(key);
+      }
+
+      function setStorageArray(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+        notifySyncStorageChange(key);
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function getMovieId(movie) {
+        const idSource =
+          movie.tmdb_id ||
+          movie.ten_quoc_te ||
+          movie.ten_goc ||
+          movie.ten_viet ||
+          "";
+
+        return `${idSource}-${movie.nam ?? ""}`.trim().toLowerCase();
+      }
+
+      function isJapaneseOrKoreanMovie(movie) {
+        const country = String(movie.quoc_gia || "").toLowerCase();
+
+        return (
+          country.includes("nhật") ||
+          country.includes("japan") ||
+          country.includes("hàn") ||
+          country.includes("korea")
+        );
+      }
+
+      function getDisplayMovieTitle(movie) {
+        if (isJapaneseOrKoreanMovie(movie)) {
+          return (
+            movie.ten_quoc_te ||
+            movie.ten_goc ||
+            movie.ten_viet ||
+            "Không rõ tên phim"
+          );
+        }
+
+        return (
+          movie.ten_goc ||
+          movie.ten_quoc_te ||
+          movie.ten_viet ||
+          "Không rõ tên phim"
+        );
+      }
+
+      function getMovieSubtitle(movie) {
+        const mainTitle = getDisplayMovieTitle(movie);
+        const subtitles = [];
+
+        const vietnameseTitle = String(movie.ten_viet || "").trim();
+        const originalTitle = String(movie.ten_goc || "").trim();
+
+        if (
+          vietnameseTitle &&
+          vietnameseTitle.toLowerCase() !== mainTitle.trim().toLowerCase()
+        ) {
+          subtitles.push(vietnameseTitle);
+        }
+
+        if (
+          isJapaneseOrKoreanMovie(movie) &&
+          originalTitle &&
+          originalTitle.toLowerCase() !== mainTitle.trim().toLowerCase() &&
+          originalTitle.toLowerCase() !== vietnameseTitle.toLowerCase()
+        ) {
+          subtitles.push(originalTitle);
+        }
+
+        return subtitles.join(" · ");
+      }
+
+      function getAvoidTitle(movie) {
+        return String(
+          movie.ten_quoc_te || movie.ten_goc || movie.ten_viet || "",
+        ).trim();
+      }
+
+      function saveSeenMovie(movie) {
+        const title = getAvoidTitle(movie);
+
+        if (!title) return;
+
+        const seenMovies = getStorageArray(SEEN_KEY);
+        const normalizedTitle = title.toLowerCase();
+
+        const updatedSeenMovies = [
+          title,
+          ...seenMovies.filter(
+            (item) => String(item).trim().toLowerCase() !== normalizedTitle,
+          ),
+        ].slice(0, SEEN_LIMIT);
+
+        setStorageArray(SEEN_KEY, updatedSeenMovies);
+      }
+
+      function migrateHistoryToSeenMovies() {
+        const seenMovies = getStorageArray(SEEN_KEY);
+
+        if (seenMovies.length) return;
+
+        const oldHistory = getStorageArray(HISTORY_KEY);
+        const migratedTitles = oldHistory
+          .map(getAvoidTitle)
+          .filter(Boolean)
+          .filter(
+            (title, index, array) =>
+              array.findIndex(
+                (item) => item.toLowerCase() === title.toLowerCase(),
+              ) === index,
+          )
+          .slice(0, SEEN_LIMIT);
+
+        if (migratedTitles.length) {
+          setStorageArray(SEEN_KEY, migratedTitles);
+        }
+      }
+
+      function getRandomExclusionTitles() {
+        const watchedTitles = getStorageArray(WATCHED_KEY)
+          .map(getAvoidTitle)
+          .filter(Boolean);
+
+        const seenTitles = getStorageArray(SEEN_KEY).filter(
+          (title) => typeof title === "string" && title.trim(),
+        );
+
+        const uniqueTitles = [];
+        const normalizedTitles = new Set();
+
+        [...watchedTitles, ...seenTitles].forEach((title) => {
+          const cleanTitle = String(title).trim();
+          const normalizedTitle = cleanTitle.toLowerCase();
+
+          if (!cleanTitle || normalizedTitles.has(normalizedTitle)) {
+            return;
+          }
+
+          normalizedTitles.add(normalizedTitle);
+          uniqueTitles.push(cleanTitle);
+        });
+
+        return uniqueTitles.slice(0, RANDOM_EXCLUSION_LIMIT);
+      }
+
+      function formatWatchedDate(value) {
+        if (!value) return "";
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return "";
+        }
+
+        return new Intl.DateTimeFormat("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }).format(date);
+      }
+
+      function isMovieWatched(movie) {
+        if (!movie) return false;
+
+        const movieId = getMovieId(movie);
+
+        return getStorageArray(WATCHED_KEY).some(
+          (item) => getMovieId(item) === movieId,
+        );
+      }
+
+      function updateDetailWatchedButton() {
+        if (!currentMovie) return;
+
+        const watched = isMovieWatched(currentMovie);
+
+        detailWatchedButton.classList.toggle("watched", watched);
+
+        detailWatchedButton.textContent = watched
+          ? "✅ Đã xem"
+          : "☑️ Đánh dấu đã xem";
+      }
+
+      function updateWatchedButtons() {
+        if (!currentMovie) return;
+
+        const watched = isMovieWatched(currentMovie);
+
+        watchedButton.classList.toggle("watched", watched);
+        watchedIcon.textContent = watched ? "✅" : "☑️";
+        watchedText.textContent = watched ? "Đã xem" : "Đánh dấu đã xem";
+
+        watchedButton.title = watched
+          ? "Bỏ đánh dấu đã xem"
+          : "Đánh dấu phim này là đã xem";
+
+        if (!detailModal.classList.contains("hidden")) {
+          updateDetailWatchedButton();
+        }
+      }
+
+      function toggleWatchedMovie(movie = currentMovie) {
+        if (!movie) return;
+
+        const watchedMovies = getStorageArray(WATCHED_KEY);
+        const movieId = getMovieId(movie);
+        const watched = watchedMovies.some(
+          (item) => getMovieId(item) === movieId,
+        );
+
+        let updatedMovies;
+
+        if (watched) {
+          updatedMovies = watchedMovies.filter(
+            (item) => getMovieId(item) !== movieId,
+          );
+
+          showToast("Đã bỏ đánh dấu đã xem", "↩️");
+        } else {
+          const watchedMovie = {
+            ...movie,
+            watched_at: new Date().toISOString(),
+          };
+
+          updatedMovies = [
+            watchedMovie,
+            ...watchedMovies.filter((item) => getMovieId(item) !== movieId),
+          ].slice(0, WATCHED_LIMIT);
+
+          // Đảm bảo phim đã xem luôn nằm trong danh sách chống trùng.
+          saveSeenMovie(movie);
+
+          showToast("Đã thêm vào danh sách đã xem", "✅");
+        }
+
+        setStorageArray(WATCHED_KEY, updatedMovies);
+        renderWatchedMovies();
+
+        if (currentMovie && getMovieId(currentMovie) === movieId) {
+          updateWatchedButtons();
+        }
+      }
+
+      function splitExclusionValues(value) {
+        const values = String(value || "")
+          .split(/[,;\n]+/)
+          .map((item) => item.trim())
+          .filter(Boolean);
+
+        const uniqueValues = [];
+        const normalizedValues = new Set();
+
+        values.forEach((item) => {
+          const normalizedItem = item.toLowerCase();
+
+          if (normalizedValues.has(normalizedItem)) {
+            return;
+          }
+
+          normalizedValues.add(normalizedItem);
+          uniqueValues.push(item);
+        });
+
+        return uniqueValues;
+      }
+
+      function getExclusionModeValues() {
+        return {
+          enabled: exclusionEnabled.checked,
+          actors: splitExclusionValues(excludeActors.value),
+          countries: splitExclusionValues(excludeCountries.value),
+          genres: splitExclusionValues(excludeGenres.value),
+          years: splitExclusionValues(excludeYears.value),
+          keywords: splitExclusionValues(excludeKeywords.value),
+        };
+      }
+
+      function setExclusionModeValues(filters = {}) {
+        exclusionEnabled.checked = filters.enabled !== false;
+        excludeActors.value = Array.isArray(filters.actors)
+          ? filters.actors.join(", ")
+          : "";
+        excludeCountries.value = Array.isArray(filters.countries)
+          ? filters.countries.join(", ")
+          : "";
+        excludeGenres.value = Array.isArray(filters.genres)
+          ? filters.genres.join(", ")
+          : "";
+        excludeYears.value = Array.isArray(filters.years)
+          ? filters.years.join(", ")
+          : "";
+        excludeKeywords.value = Array.isArray(filters.keywords)
+          ? filters.keywords.join(", ")
+          : "";
+      }
+
+      function getExclusionModeParts() {
+        const filters = getExclusionModeValues();
+
+        if (!filters.enabled) {
+          return [];
+        }
+
+        const parts = [];
+
+        filters.actors.forEach((value) => {
+          parts.push(`Né diễn viên: ${value}`);
+        });
+
+        filters.countries.forEach((value) => {
+          parts.push(`Né quốc gia: ${value}`);
+        });
+
+        filters.genres.forEach((value) => {
+          parts.push(`Né thể loại: ${value}`);
+        });
+
+        filters.years.forEach((value) => {
+          parts.push(`Né năm: ${value}`);
+        });
+
+        filters.keywords.forEach((value) => {
+          parts.push(`Né từ khóa: ${value}`);
+        });
+
+        return parts;
+      }
+
+      function parseExclusionYearRule(rule) {
+        const normalizedRule = String(rule || "")
+          .trim()
+          .toLowerCase()
+          .replaceAll("–", "-")
+          .replaceAll("—", "-");
+
+        const singleYearMatch = normalizedRule.match(/^(\d{4})$/);
+
+        if (singleYearMatch) {
+          const year = Number(singleYearMatch[1]);
+
+          return {
+            type: "single",
+            from: year,
+            to: year,
+          };
+        }
+
+        const rangeMatch = normalizedRule.match(/^(\d{4})\s*-\s*(\d{4})$/);
+
+        if (rangeMatch) {
+          return {
+            type: "range",
+            from: Number(rangeMatch[1]),
+            to: Number(rangeMatch[2]),
+          };
+        }
+
+        const beforeMatch = normalizedRule.match(/^(?:trước|truoc)\s+(\d{4})$/);
+
+        if (beforeMatch) {
+          return {
+            type: "before",
+            to: Number(beforeMatch[1]),
+          };
+        }
+
+        const afterMatch = normalizedRule.match(/^(?:sau|từ|tu)\s+(\d{4})$/);
+
+        if (afterMatch) {
+          return {
+            type: "after",
+            from: Number(afterMatch[1]),
+          };
+        }
+
+        return null;
+      }
+
+      function validateExclusionMode() {
+        const filters = getExclusionModeValues();
+
+        if (!filters.enabled) {
+          return true;
+        }
+
+        const maximumYear = new Date().getFullYear() + 2;
+
+        for (const rule of filters.years) {
+          const parsedRule = parseExclusionYearRule(rule);
+
+          if (!parsedRule) {
+            showToast(`Quy tắc năm không hợp lệ: ${rule}`, "⚠️");
+
+            return false;
+          }
+
+          const years = [parsedRule.from, parsedRule.to].filter(Boolean);
+
+          if (years.some((year) => year < 1888 || year > maximumYear)) {
+            showToast(`Năm loại trừ không hợp lệ: ${rule}`, "⚠️");
+
+            return false;
+          }
+
+          if (parsedRule.type === "range" && parsedRule.from > parsedRule.to) {
+            showToast(`Khoảng năm bị ngược: ${rule}`, "⚠️");
+
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      function renderExclusionModeSummary() {
+        const filters = getExclusionModeValues();
+        const parts = getExclusionModeParts();
+
+        exclusionModeCount.textContent = parts.length;
+        exclusionModeCount.classList.toggle("hidden", !parts.length);
+
+        exclusionModeSummary.classList.toggle(
+          "hidden",
+          filters.enabled && !parts.length,
+        );
+
+        if (!filters.enabled) {
+          exclusionModeSummary.innerHTML = `
+            <span class="exclusion-disabled-chip">
+              Loại trừ cá nhân đang tắt
+            </span>
+            <span class="sovereignty-chip">
+              🛡️ Bảo vệ chủ quyền vẫn bật
+            </span>
+          `;
+
+          exclusionModeSummary.classList.remove("hidden");
+          return;
+        }
+
+        if (!parts.length) {
+          exclusionModeSummary.innerHTML = "";
+          return;
+        }
+
+        const visibleParts = parts.slice(0, 8);
+        const hiddenCount = parts.length - visibleParts.length;
+
+        exclusionModeSummary.innerHTML =
+          visibleParts
+            .map((part) => `<span>${escapeHtml(part)}</span>`)
+            .join("") +
+          (hiddenCount ? `<span>+${hiddenCount} mục khác</span>` : "") +
+          `<span class="sovereignty-chip">
+            🛡️ Bảo vệ chủ quyền
+          </span>`;
+      }
+
+      function saveExclusionMode() {
+        localStorage.setItem(
+          EXCLUSION_MODE_KEY,
+          JSON.stringify(getExclusionModeValues()),
+        );
+        notifySyncStorageChange(EXCLUSION_MODE_KEY);
+      }
+
+      function loadExclusionMode() {
+        try {
+          const savedFilters = JSON.parse(
+            localStorage.getItem(EXCLUSION_MODE_KEY),
+          );
+
+          if (savedFilters && typeof savedFilters === "object") {
+            setExclusionModeValues(savedFilters);
+          } else {
+            setExclusionModeValues({
+              enabled: true,
+            });
+          }
+        } catch {
+          localStorage.removeItem(EXCLUSION_MODE_KEY);
+          setExclusionModeValues({
+            enabled: true,
+          });
+        }
+
+        renderExclusionModeSummary();
+      }
+
+      function resetExclusionMode() {
+        setExclusionModeValues({
+          enabled: true,
+        });
+
+        localStorage.removeItem(EXCLUSION_MODE_KEY);
+        notifySyncStorageChange(EXCLUSION_MODE_KEY);
+        renderExclusionModeSummary();
+      }
+
+      function toggleExclusionModePanel(forceOpen) {
+        const shouldOpen =
+          typeof forceOpen === "boolean"
+            ? forceOpen
+            : exclusionModePanel.classList.contains("hidden");
+
+        exclusionModePanel.classList.toggle("hidden", !shouldOpen);
+
+        exclusionModeToggle.setAttribute("aria-expanded", String(shouldOpen));
+
+        exclusionModeArrow.classList.toggle("open", shouldOpen);
+      }
+
+      function getAdvancedFilterValues() {
+        return {
+          contentType: filterContentType.value,
+          country: filterCountry.value,
+          genre: filterGenre.value,
+          format: filterFormat.value,
+          yearFrom: filterYearFrom.value.trim(),
+          yearTo: filterYearTo.value.trim(),
+          imdb: filterImdb.value,
+          duration: filterDuration.value,
+        };
+      }
+
+      function setAdvancedFilterValues(filters = {}) {
+        filterContentType.value = filters.contentType || "";
+        filterCountry.value = filters.country || "";
+        filterGenre.value = filters.genre || "";
+        filterFormat.value = filters.format || "";
+        filterYearFrom.value = filters.yearFrom || "";
+        filterYearTo.value = filters.yearTo || "";
+        filterImdb.value = filters.imdb || "";
+        filterDuration.value = filters.duration || "";
+      }
+
+      function getAdvancedFilterParts() {
+        const filters = getAdvancedFilterValues();
+        const parts = [];
+
+        if (filters.contentType) {
+          parts.push(filters.contentType);
+        }
+
+        if (filters.country) {
+          parts.push(filters.country);
+        }
+
+        if (filters.genre) {
+          parts.push(filters.genre);
+        }
+
+        if (filters.format) {
+          parts.push(filters.format);
+        }
+
+        if (filters.yearFrom && filters.yearTo) {
+          parts.push(
+            `phát hành từ năm ${filters.yearFrom} đến năm ${filters.yearTo}`,
+          );
+        } else if (filters.yearFrom) {
+          parts.push(`phát hành từ năm ${filters.yearFrom} trở đi`);
+        } else if (filters.yearTo) {
+          parts.push(`phát hành đến năm ${filters.yearTo}`);
+        }
+
+        if (filters.imdb) {
+          parts.push(`IMDb từ ${filters.imdb} trở lên`);
+        }
+
+        if (filters.duration) {
+          parts.push(`thời lượng không quá ${filters.duration} phút`);
+        }
+
+        return parts;
+      }
+
+      function validateAdvancedFilters() {
+        const filters = getAdvancedFilterValues();
+        const currentYear = new Date().getFullYear() + 2;
+        const yearFrom = filters.yearFrom ? Number(filters.yearFrom) : null;
+        const yearTo = filters.yearTo ? Number(filters.yearTo) : null;
+
+        if (yearFrom && (yearFrom < 1900 || yearFrom > currentYear)) {
+          showToast("Năm bắt đầu không hợp lệ", "⚠️");
+          return false;
+        }
+
+        if (yearTo && (yearTo < 1900 || yearTo > currentYear)) {
+          showToast("Năm kết thúc không hợp lệ", "⚠️");
+          return false;
+        }
+
+        if (yearFrom && yearTo && yearFrom > yearTo) {
+          showToast("Năm bắt đầu phải nhỏ hơn năm kết thúc", "⚠️");
+          return false;
+        }
+
+        return true;
+      }
+
+      function buildRequestWithAdvancedFilters(baseRequest) {
+        const baseParts = String(baseRequest || "Random")
+          .split("+")
+          .map((part) => part.trim())
+          .filter(Boolean);
+
+        if (!baseParts.length) {
+          baseParts.push("Random");
+        }
+
+        if (baseParts[0].toLowerCase() !== "random") {
+          baseParts.unshift("Random");
+        }
+
+        const normalizedParts = new Set(
+          baseParts.map((part) => part.toLowerCase()),
+        );
+
+        getAdvancedFilterParts().forEach((part) => {
+          const normalizedPart = part.toLowerCase();
+
+          if (!normalizedParts.has(normalizedPart)) {
+            baseParts.push(part);
+            normalizedParts.add(normalizedPart);
+          }
+        });
+
+        return baseParts.join(" + ");
+      }
+
+      function renderAdvancedFilterSummary() {
+        const parts = getAdvancedFilterParts();
+
+        advancedFilterCount.textContent = parts.length;
+        advancedFilterCount.classList.toggle("hidden", !parts.length);
+        advancedFilterSummary.classList.toggle("hidden", !parts.length);
+
+        if (!parts.length) {
+          advancedFilterSummary.innerHTML = "";
+          return;
+        }
+
+        advancedFilterSummary.innerHTML = parts
+          .map((part) => `<span>${escapeHtml(part)}</span>`)
+          .join("");
+      }
+
+      function saveAdvancedFilters() {
+        localStorage.setItem(
+          ADVANCED_FILTER_KEY,
+          JSON.stringify(getAdvancedFilterValues()),
+        );
+        notifySyncStorageChange(ADVANCED_FILTER_KEY);
+      }
+
+      function loadAdvancedFilters() {
+        try {
+          const savedFilters = JSON.parse(
+            localStorage.getItem(ADVANCED_FILTER_KEY),
+          );
+
+          if (savedFilters && typeof savedFilters === "object") {
+            setAdvancedFilterValues(savedFilters);
+          }
+        } catch {
+          localStorage.removeItem(ADVANCED_FILTER_KEY);
+        }
+
+        renderAdvancedFilterSummary();
+      }
+
+      function resetAdvancedFilters() {
+        setAdvancedFilterValues();
+        localStorage.removeItem(ADVANCED_FILTER_KEY);
+        notifySyncStorageChange(ADVANCED_FILTER_KEY);
+        renderAdvancedFilterSummary();
+      }
+
+      function toggleAdvancedFilterPanel(forceOpen) {
+        const shouldOpen =
+          typeof forceOpen === "boolean"
+            ? forceOpen
+            : advancedFilterPanel.classList.contains("hidden");
+
+        advancedFilterPanel.classList.toggle("hidden", !shouldOpen);
+        advancedFilterToggle.setAttribute("aria-expanded", String(shouldOpen));
+        advancedFilterArrow.classList.toggle("open", shouldOpen);
+      }
+
+      function showState(state) {
+        emptyState.classList.add("hidden");
+        loadingState.classList.add("hidden");
+        errorState.classList.add("hidden");
+        movieCard.classList.add("hidden");
+
+        state.classList.remove("hidden");
+      }
+
+      function setLoading(status) {
+        isLoading = status;
+        randomButton.disabled = status;
+
+        if (status) {
+          randomButtonText.textContent = "Đang quay";
+          randomButtonIcon.classList.add("spinning");
+          showState(loadingState);
+        } else {
+          randomButtonText.textContent = "Quất phim";
+          randomButtonIcon.classList.remove("spinning");
+        }
+      }
+
+      function showToast(message, icon = "✅") {
+        clearTimeout(toastTimeout);
+
+        toastIcon.textContent = icon;
+        toastMessage.textContent = message;
+        toast.classList.add("show");
+
+        toastTimeout = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2500);
+      }
+
+      function formatDate(value) {
+        if (!value) return "Chưa rõ";
+
+        const date = new Date(`${value}T00:00:00`);
+
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+
+        return new Intl.DateTimeFormat("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }).format(date);
+      }
+
+      function formatRuntime(minutes) {
+        const value = Number(minutes);
+
+        if (!Number.isFinite(value) || value <= 0) {
+          return "Chưa rõ";
+        }
+
+        const hours = Math.floor(value / 60);
+        const remainingMinutes = value % 60;
+
+        if (!hours) {
+          return `${remainingMinutes} phút`;
+        }
+
+        return remainingMinutes
+          ? `${hours} giờ ${remainingMinutes} phút`
+          : `${hours} giờ`;
+      }
+
+      function getDetailCacheKey(movie) {
+        return `${movie.tmdb_media_type || "movie"}-${movie.tmdb_id || ""}`;
+      }
+
+      function setDetailState(state) {
+        detailLoading.classList.add("hidden");
+        detailError.classList.add("hidden");
+        detailContent.classList.add("hidden");
+
+        state.classList.remove("hidden");
+      }
+
+      function updateDetailSaveButton() {
+        if (!currentMovie) return;
+
+        const saved = isMovieSaved(currentMovie);
+
+        detailSaveButton.classList.toggle("saved", saved);
+        detailSaveButton.textContent = saved ? "❤️ Đã lưu" : "🔖 Lưu phim";
+      }
+
+      function closeDetailModal() {
+        if (!trailerModal.classList.contains("hidden")) {
+          closeTrailerModal();
+        }
+
+        detailModal.classList.add("hidden");
+        detailModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("detail-modal-open");
+
+        if (detailReturnFocus) {
+          detailReturnFocus.focus();
+        }
+      }
+
+      function getFallbackTrailerUrl() {
+        if (!currentMovie) return "";
+
+        const query = encodeURIComponent(
+          `${getDisplayMovieTitle(currentMovie)} ${
+            currentMovie.nam || ""
+          } official trailer`,
+        );
+
+        return `https://www.youtube.com/results?search_query=${query}`;
+      }
+
+      function setTrailerState(state) {
+        trailerLoading.classList.add("hidden");
+        trailerError.classList.add("hidden");
+        trailerPlayerWrap.classList.add("hidden");
+
+        state.classList.remove("hidden");
+      }
+
+      function getTrailerEmbedUrl(videoKey) {
+        const safeKey = encodeURIComponent(videoKey);
+
+        return (
+          `https://www.youtube-nocookie.com/embed/${safeKey}` +
+          "?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+        );
+      }
+
+      function stopTrailerPlayback() {
+        trailerPlayer.src = "";
+      }
+
+      function closeTrailerModal() {
+        stopTrailerPlayback();
+
+        trailerModal.classList.add("hidden");
+        trailerModal.setAttribute("aria-hidden", "true");
+
+        if (detailModal.classList.contains("hidden")) {
+          document.body.classList.remove("detail-modal-open");
+        }
+
+        if (trailerReturnFocus) {
+          trailerReturnFocus.focus();
+        }
+      }
+
+      function showTrailerError(message) {
+        trailerModalTitle.textContent = currentMovie
+          ? getDisplayMovieTitle(currentMovie)
+          : "Trailer";
+
+        trailerErrorMessage.textContent =
+          message || "Chưa tìm thấy trailer chính thức cho phim này.";
+
+        trailerSearchLink.href = getFallbackTrailerUrl();
+
+        setTrailerState(trailerError);
+      }
+
+      function playTrailer(details) {
+        const trailerKey = details?.trailer_key;
+        const trailerUrl =
+          details?.trailer_url ||
+          (trailerKey ? `https://www.youtube.com/watch?v=${trailerKey}` : "");
+
+        currentDetailData = details || currentDetailData;
+
+        if (!trailerKey) {
+          showTrailerError(
+            "TMDB chưa ghi nhận trailer YouTube có thể phát cho phim này.",
+          );
+          return;
+        }
+
+        trailerModalTitle.textContent = getDisplayMovieTitle(currentMovie);
+
+        trailerVideoName.textContent =
+          details.trailer_name || "Trailer chính thức";
+
+        trailerYoutubeLink.href = trailerUrl;
+        trailerSearchLink.href = trailerUrl || getFallbackTrailerUrl();
+
+        trailerPlayer.src = getTrailerEmbedUrl(trailerKey);
+
+        setTrailerState(trailerPlayerWrap);
+      }
+
+      async function fetchCurrentMovieDetails(forceReload = false) {
+        if (!currentMovie?.tmdb_id || !currentMovie?.tmdb_media_type) {
+          throw new Error("Phim này chưa có dữ liệu TMDB để tìm trailer.");
+        }
+
+        const cacheKey = getDetailCacheKey(currentMovie);
+
+        if (!forceReload && detailCache.has(cacheKey)) {
+          return detailCache.get(cacheKey);
+        }
+
+        const response = await fetch(
+          `/api/movie-details/${encodeURIComponent(
+            currentMovie.tmdb_media_type,
+          )}/${encodeURIComponent(currentMovie.tmdb_id)}`,
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || "Không thể tải trailer.");
+        }
+
+        detailCache.set(cacheKey, result.data);
+        return result.data;
+      }
+
+      async function loadTrailer(forceReload = false) {
+        setTrailerState(trailerLoading);
+
+        try {
+          const details = await fetchCurrentMovieDetails(forceReload);
+
+          playTrailer(details);
+        } catch (error) {
+          console.error(error);
+
+          showTrailerError(error.message || "Không thể tải trailer.");
+        }
+      }
+
+      function openTrailerModal() {
+        if (!currentMovie) return;
+
+        trailerReturnFocus = document.activeElement;
+
+        trailerModal.classList.remove("hidden");
+        trailerModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("detail-modal-open");
+
+        trailerModalTitle.textContent = getDisplayMovieTitle(currentMovie);
+
+        trailerSearchLink.href = getFallbackTrailerUrl();
+
+        trailerCloseButton.focus();
+        loadTrailer();
+      }
+
+      function openDetailTrailer() {
+        openTrailerModal();
+      }
+
+      function renderDetailImage(image, fallback, url, alt) {
+        if (!url) {
+          image.classList.add("hidden");
+
+          if (fallback) {
+            fallback.classList.remove("hidden");
+          }
+
+          return;
+        }
+
+        image.src = url;
+        image.alt = alt;
+        image.classList.remove("hidden");
+
+        if (fallback) {
+          fallback.classList.add("hidden");
+        }
+
+        image.onerror = () => {
+          image.classList.add("hidden");
+
+          if (fallback) {
+            fallback.classList.remove("hidden");
+          }
+        };
+      }
+
+      function renderMovieDetails(details) {
+        currentDetailData = details;
+
+        const mainTitle = details.title || getDisplayMovieTitle(currentMovie);
+
+        const subtitleParts = [details.vietnamese_title, details.original_title]
+          .filter(Boolean)
+          .filter(
+            (title, index, array) =>
+              title.trim().toLowerCase() !== mainTitle.trim().toLowerCase() &&
+              array.findIndex(
+                (item) =>
+                  item.trim().toLowerCase() === title.trim().toLowerCase(),
+              ) === index,
+          );
+
+        detailMediaLabel.textContent =
+          details.media_type === "tv" ? "Phim bộ" : "Phim lẻ";
+
+        detailTitle.textContent = mainTitle;
+        detailSubtitle.textContent = subtitleParts.join(" · ");
+        detailSubtitle.classList.toggle("hidden", !subtitleParts.length);
+
+        detailTagline.textContent = details.tagline || "";
+        detailTagline.classList.toggle("hidden", !details.tagline);
+
+        renderDetailImage(
+          detailBackdrop,
+          null,
+          details.backdrop_url,
+          `Ảnh nền phim ${mainTitle}`,
+        );
+
+        renderDetailImage(
+          detailPoster,
+          detailPosterFallback,
+          details.poster_url || currentMovie?.poster_url,
+          `Poster phim ${mainTitle}`,
+        );
+
+        const badges = [
+          details.year ? `📅 ${details.year}` : "",
+          details.runtime ? `⏱️ ${formatRuntime(details.runtime)}` : "",
+          details.vote_average ? `⭐ ${details.vote_average}/10` : "",
+          details.certification ? `🔞 ${details.certification}` : "",
+        ].filter(Boolean);
+
+        detailBadges.innerHTML = badges
+          .map((badge) => `<span>${escapeHtml(badge)}</span>`)
+          .join("");
+
+        detailOverview.textContent =
+          details.overview || currentMovie?.noi_dung || "Chưa có nội dung.";
+
+        detailDirector.textContent = details.directors?.join(", ") || "Chưa rõ";
+
+        detailReleaseDate.textContent = formatDate(details.release_date);
+
+        detailRuntime.textContent = formatRuntime(details.runtime);
+
+        detailCountries.textContent =
+          details.countries?.join(", ") || currentMovie?.quoc_gia || "Chưa rõ";
+
+        detailLanguages.textContent =
+          details.languages?.join(", ") || "Chưa rõ";
+
+        detailStatus.textContent = details.status || "Chưa rõ";
+
+        detailTmdbScore.textContent = details.vote_average
+          ? `${details.vote_average}/10`
+          : "N/A";
+
+        detailImdbScore.textContent =
+          currentMovie?.imdb || details.imdb_id || "N/A";
+
+        detailGenres.innerHTML = (details.genres || [])
+          .map((genre) => `<span>${escapeHtml(genre)}</span>`)
+          .join("");
+
+        const tvStats =
+          details.media_type === "tv"
+            ? [
+                details.number_of_seasons
+                  ? `${details.number_of_seasons} mùa`
+                  : "",
+                details.number_of_episodes
+                  ? `${details.number_of_episodes} tập`
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" · ")
+            : "";
+
+        detailTvStats.textContent = tvStats;
+        detailTvStats.classList.toggle("hidden", !tvStats);
+
+        const cast = Array.isArray(details.cast) ? details.cast : [];
+
+        detailCastCount.textContent = cast.length ? `${cast.length} người` : "";
+
+        detailCastList.innerHTML = cast.length
+          ? cast
+              .map(
+                (person) => `
+                  <article class="detail-cast-card">
+                    ${
+                      person.profile_url
+                        ? `
+                          <img
+                            src="${escapeHtml(person.profile_url)}"
+                            alt="${escapeHtml(person.name)}"
+                            loading="lazy"
+                          />
+                        `
+                        : `
+                          <div class="detail-cast-placeholder">
+                            ${escapeHtml(
+                              person.name.trim().charAt(0).toUpperCase() || "?",
+                            )}
+                          </div>
+                        `
+                    }
+
+                    <div>
+                      <strong>${escapeHtml(person.name)}</strong>
+                      <span>${escapeHtml(
+                        person.character || "Vai diễn chưa rõ",
+                      )}</span>
+                    </div>
+                  </article>
+                `,
+              )
+              .join("")
+          : `
+              <p class="detail-empty-cast">
+                Chưa có thông tin diễn viên.
+              </p>
+            `;
+
+        detailTrailerButton.disabled = !(details.trailer_url || currentMovie);
+
+        updateDetailSaveButton();
+        updateDetailWatchedButton();
+        setDetailState(detailContent);
+        loadWatchProviders();
+      }
+
+      async function loadMovieDetails(forceReload = false) {
+        if (!currentMovie?.tmdb_id || !currentMovie?.tmdb_media_type) {
+          detailErrorMessage.textContent =
+            "Phim này chưa có mã TMDB nên chưa thể tải thông tin chi tiết.";
+
+          setDetailState(detailError);
+          return;
+        }
+
+        setDetailState(detailLoading);
+
+        try {
+          const details = await fetchCurrentMovieDetails(forceReload);
+
+          renderMovieDetails(details);
+        } catch (error) {
+          console.error(error);
+
+          detailErrorMessage.textContent =
+            error.message || "Không thể tải chi tiết phim.";
+
+          setDetailState(detailError);
+        }
+      }
+
+      function openDetailModal() {
+        if (!currentMovie) return;
+
+        detailReturnFocus = document.activeElement;
+        detailModal.classList.remove("hidden");
+        detailModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("detail-modal-open");
+
+        detailCloseButton.focus();
+        loadMovieDetails();
+      }
+
+      function getWatchProviderCacheKey(movie, region = "VN") {
+        return [
+          movie.tmdb_media_type || "movie",
+          movie.tmdb_id || "",
+          region,
+        ].join("-");
+      }
+
+      function getLegalWatchSearchUrl(movie) {
+        const title = getDisplayMovieTitle(movie);
+        const year = movie?.nam || "";
+
+        return `https://www.google.com/search?q=${encodeURIComponent(
+          `${title} ${year} xem ở đâu hợp pháp Việt Nam`,
+        )}`;
+      }
+
+      function setWatchProviderState(state) {
+        detailWatchLoading.classList.add("hidden");
+        detailWatchError.classList.add("hidden");
+        detailWatchEmpty.classList.add("hidden");
+        detailWatchContent.classList.add("hidden");
+
+        state.classList.remove("hidden");
+      }
+
+      function scrollToWatchProviders() {
+        window.setTimeout(() => {
+          detailWatchSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 120);
+      }
+
+      function renderWatchProviderLogo(provider) {
+        const initial = (provider.provider_name || "?")
+          .trim()
+          .charAt(0)
+          .toUpperCase();
+
+        if (!provider.logo_url) {
+          return `
+            <div class="detail-provider-logo-fallback">
+              ${escapeHtml(initial)}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="detail-provider-logo-wrap">
+            <img
+              src="${escapeHtml(provider.logo_url)}"
+              alt="${escapeHtml(provider.provider_name)}"
+              loading="lazy"
+              onerror="
+                this.classList.add('hidden');
+                this.nextElementSibling.classList.remove('hidden');
+              "
+            />
+            <div class="detail-provider-logo-fallback hidden">
+              ${escapeHtml(initial)}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderWatchProviders(data) {
+        detailWatchRegion.textContent = data.region || "VN";
+
+        detailWatchSearchLink.href =
+          data.search_url || getLegalWatchSearchUrl(currentMovie);
+
+        if (!data.has_providers) {
+          setWatchProviderState(detailWatchEmpty);
+
+          if (shouldScrollToWatchProviders) {
+            shouldScrollToWatchProviders = false;
+            scrollToWatchProviders();
+          }
+
+          return;
+        }
+
+        const groupLabels = {
+          flatrate: "Gói thuê bao",
+          free: "Miễn phí",
+          ads: "Miễn phí có quảng cáo",
+          rent: "Thuê",
+          buy: "Mua",
+        };
+
+        const groupOrder = ["flatrate", "free", "ads", "rent", "buy"];
+
+        detailWatchGroups.innerHTML = groupOrder
+          .filter(
+            (groupName) =>
+              Array.isArray(data.groups?.[groupName]) &&
+              data.groups[groupName].length,
+          )
+          .map((groupName) => {
+            const providers = data.groups[groupName];
+
+            return `
+              <div class="detail-watch-group">
+                <h4>${escapeHtml(groupLabels[groupName])}</h4>
+
+                <div class="detail-provider-list">
+                  ${providers
+                    .map(
+                      (provider) => `
+                        <a
+                          class="detail-provider-card"
+                          href="${escapeHtml(
+                            data.link ||
+                              data.search_url ||
+                              getLegalWatchSearchUrl(currentMovie),
+                          )}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Mở nơi xem ${escapeHtml(
+                            provider.provider_name,
+                          )}"
+                        >
+                          ${renderWatchProviderLogo(provider)}
+                          <span>${escapeHtml(provider.provider_name)}</span>
+                        </a>
+                      `,
+                    )
+                    .join("")}
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        detailWatchLink.href =
+          data.link || data.search_url || getLegalWatchSearchUrl(currentMovie);
+
+        setWatchProviderState(detailWatchContent);
+
+        if (shouldScrollToWatchProviders) {
+          shouldScrollToWatchProviders = false;
+          scrollToWatchProviders();
+        }
+      }
+
+      async function loadWatchProviders(forceReload = false) {
+        if (!currentMovie?.tmdb_id || !currentMovie?.tmdb_media_type) {
+          detailWatchSearchLink.href = getLegalWatchSearchUrl(currentMovie);
+
+          setWatchProviderState(detailWatchEmpty);
+          return;
+        }
+
+        const region = "VN";
+        const cacheKey = getWatchProviderCacheKey(currentMovie, region);
+
+        if (!forceReload && watchProviderCache.has(cacheKey)) {
+          renderWatchProviders(watchProviderCache.get(cacheKey));
+          return;
+        }
+
+        setWatchProviderState(detailWatchLoading);
+
+        try {
+          const response = await fetch(
+            `/api/watch-providers/${encodeURIComponent(
+              currentMovie.tmdb_media_type,
+            )}/${encodeURIComponent(currentMovie.tmdb_id)}?region=${region}`,
+          );
+
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            throw new Error(result.error || "Không thể tải nơi xem phim.");
+          }
+
+          watchProviderCache.set(cacheKey, result.data);
+          renderWatchProviders(result.data);
+        } catch (error) {
+          console.error(error);
+
+          detailWatchErrorMessage.textContent =
+            error.message || "Không thể tải nơi xem phim.";
+
+          setWatchProviderState(detailWatchError);
+
+          if (shouldScrollToWatchProviders) {
+            shouldScrollToWatchProviders = false;
+            scrollToWatchProviders();
+          }
+        }
+      }
+
+      function openWatchProviders() {
+        if (!currentMovie) return;
+
+        shouldScrollToWatchProviders = true;
+
+        if (detailModal.classList.contains("hidden")) {
+          openDetailModal();
+          return;
+        }
+
+        loadWatchProviders();
+        scrollToWatchProviders();
+      }
+
+      function addFilter(filter) {
+        const currentValue = movieInput.value.trim();
+
+        if (!currentValue || currentValue.toLowerCase() === "random") {
+          movieInput.value = `Random + ${filter}`;
+          return;
+        }
+
+        const hasFilter = currentValue
+          .toLowerCase()
+          .includes(filter.toLowerCase());
+
+        if (!hasFilter) {
+          movieInput.value = `${currentValue} + ${filter}`;
+        }
+      }
+
+      function saveToHistory(movie) {
+        const history = getStorageArray(HISTORY_KEY);
+        const movieId = getMovieId(movie);
+
+        const newHistory = [
+          movie,
+          ...history.filter((item) => getMovieId(item) !== movieId),
+        ].slice(0, 8);
+
+        setStorageArray(HISTORY_KEY, newHistory);
+        saveSeenMovie(movie);
+        renderHistory();
+      }
+
+      function isMovieSaved(movie) {
+        const savedMovies = getStorageArray(SAVED_KEY);
+        const movieId = getMovieId(movie);
+
+        return savedMovies.some((item) => getMovieId(item) === movieId);
+      }
+
+      function updateSaveButton() {
+        if (!currentMovie) return;
+
+        const saved = isMovieSaved(currentMovie);
+
+        saveButton.classList.toggle("saved", saved);
+        saveIcon.textContent = saved ? "❤️" : "🔖";
+        saveText.textContent = saved ? "Đã lưu" : "Lưu phim";
+
+        if (!detailModal.classList.contains("hidden")) {
+          updateDetailSaveButton();
+        }
+      }
+
+      function toggleSaveMovie() {
+        if (!currentMovie) return;
+
+        const savedMovies = getStorageArray(SAVED_KEY);
+        const movieId = getMovieId(currentMovie);
+        const saved = isMovieSaved(currentMovie);
+
+        let newSavedMovies;
+
+        if (saved) {
+          newSavedMovies = savedMovies.filter(
+            (item) => getMovieId(item) !== movieId,
+          );
+
+          showToast("Đã bỏ phim khỏi danh sách", "🗑️");
+        } else {
+          newSavedMovies = [currentMovie, ...savedMovies];
+          showToast("Đã lưu phim", "❤️");
+        }
+
+        setStorageArray(SAVED_KEY, newSavedMovies);
+        updateSaveButton();
+        renderSavedMovies();
+      }
+
+      function createMovieListItem(movie, type) {
+        const item = document.createElement("div");
+        item.className = "movie-list-item";
+
+        const title = escapeHtml(getDisplayMovieTitle(movie));
+        const year = escapeHtml(movie.nam || "Không rõ năm");
+        const imdb = escapeHtml(movie.imdb || "N/A");
+        const watchedDate = escapeHtml(formatWatchedDate(movie.watched_at));
+
+        item.classList.toggle("watched-list-item", type === "watched");
+
+        item.innerHTML = `
+          <div class="list-poster">
+            ${title.charAt(0).toUpperCase()}
+          </div>
+
+          <div class="list-information">
+            <strong>${title}</strong>
+
+            <span>${year} · IMDb ${imdb}</span>
+
+            ${
+              type === "watched" && watchedDate
+                ? `
+                  <small class="watched-date">
+                    ✅ Đã xem ${watchedDate}
+                  </small>
+                `
+                : ""
+            }
+          </div>
+
+          ${
+            type === "saved"
+              ? `
+                <button
+                  class="remove-saved-button"
+                  type="button"
+                  title="Bỏ lưu"
+                >
+                  ×
+                </button>
+              `
+              : ""
+          }
+
+          ${
+            type === "watched"
+              ? `
+                <button
+                  class="remove-watched-button"
+                  type="button"
+                  title="Bỏ đánh dấu đã xem"
+                >
+                  ↩
+                </button>
+              `
+              : ""
+          }
+        `;
+
+        item.addEventListener("click", (event) => {
+          if (
+            event.target.closest(".remove-saved-button") ||
+            event.target.closest(".remove-watched-button")
+          ) {
+            return;
+          }
+
+          currentMovie = movie;
+          renderMovie(movie);
+
+          window.scrollTo({
+            top: 250,
+            behavior: "smooth",
+          });
+        });
+
+        const removeButton = item.querySelector(".remove-saved-button");
+
+        if (removeButton) {
+          removeButton.addEventListener("click", () => {
+            const savedMovies = getStorageArray(SAVED_KEY);
+
+            const newSavedMovies = savedMovies.filter(
+              (item) => getMovieId(item) !== getMovieId(movie),
+            );
+
+            setStorageArray(SAVED_KEY, newSavedMovies);
+
+            if (
+              currentMovie &&
+              getMovieId(currentMovie) === getMovieId(movie)
+            ) {
+              updateSaveButton();
+            }
+
+            renderSavedMovies();
+            showToast("Đã bỏ lưu phim", "🗑️");
+          });
+        }
+
+        const removeWatchedButton = item.querySelector(
+          ".remove-watched-button",
+        );
+
+        if (removeWatchedButton) {
+          removeWatchedButton.addEventListener("click", () => {
+            toggleWatchedMovie(movie);
+          });
+        }
+
+        return item;
+      }
+
+      function renderHistory() {
+        const history = getStorageArray(HISTORY_KEY);
+        historyList.innerHTML = "";
+
+        if (!history.length) {
+          historyList.innerHTML = `
+            <p class="empty-list">
+              Chưa random phim nào.
+            </p>
+          `;
+
+          return;
+        }
+
+        history.forEach((movie) => {
+          historyList.appendChild(createMovieListItem(movie, "history"));
+        });
+      }
+
+      function renderWatchedMovies() {
+        const watchedMovies = getStorageArray(WATCHED_KEY);
+
+        watchedList.innerHTML = "";
+        watchedCount.textContent = watchedMovies.length;
+
+        if (!watchedMovies.length) {
+          watchedList.innerHTML = `
+            <p class="empty-list">
+              Chưa đánh dấu phim nào.
+            </p>
+          `;
+
+          return;
+        }
+
+        watchedMovies.forEach((movie) => {
+          watchedList.appendChild(createMovieListItem(movie, "watched"));
+        });
+      }
+
+      function renderSavedMovies() {
+        const savedMovies = getStorageArray(SAVED_KEY);
+
+        savedList.innerHTML = "";
+        savedCount.textContent = savedMovies.length;
+
+        if (!savedMovies.length) {
+          savedList.innerHTML = `
+            <p class="empty-list">
+              Chưa lưu phim nào.
+            </p>
+          `;
+
+          return;
+        }
+
+        savedMovies.forEach((movie) => {
+          savedList.appendChild(createMovieListItem(movie, "saved"));
+        });
+      }
+
+      function renderPoster(movie) {
+        const posterUrl = movie.poster_url || movie.poster || movie.image || "";
+
+        const title = getDisplayMovieTitle(movie);
+
+        posterLetter.textContent = title.trim().charAt(0).toUpperCase() || "M";
+
+        posterTitle.textContent = title;
+
+        if (posterUrl) {
+          moviePoster.src = posterUrl;
+          moviePoster.alt = `Poster phim ${title}`;
+
+          moviePoster.classList.remove("hidden");
+          posterPlaceholder.classList.add("hidden");
+
+          moviePoster.onerror = () => {
+            moviePoster.classList.add("hidden");
+            posterPlaceholder.classList.remove("hidden");
+          };
+        } else {
+          moviePoster.classList.add("hidden");
+          posterPlaceholder.classList.remove("hidden");
+        }
+      }
+
+      function renderMovie(movie) {
+        currentMovie = movie;
+        currentDetailData = null;
+
+        if (!trailerModal.classList.contains("hidden")) {
+          closeTrailerModal();
+        }
+
+        const mainTitle = getDisplayMovieTitle(movie);
+        const subtitle = getMovieSubtitle(movie);
+
+        movieTitle.textContent = mainTitle;
+        movieVietnameseTitle.textContent = subtitle;
+        movieVietnameseTitle.classList.toggle("hidden", !subtitle);
+
+        imdbScore.querySelector("strong").textContent = movie.imdb || "N/A";
+
+        movieYear.textContent = `📅 ${movie.nam || "Không rõ năm"}`;
+        movieCountry.textContent = `🌍 ${
+          movie.quoc_gia || "Không rõ quốc gia"
+        }`;
+
+        movieGenre.textContent = `🎭 ${movie.the_loai || "Không rõ thể loại"}`;
+
+        movieCast.textContent = movie.dien_vien || "Chưa có thông tin.";
+
+        movieDescription.textContent = movie.noi_dung || "Chưa có thông tin.";
+
+        movieReason.textContent = movie.ly_do || "Một lựa chọn đáng để thử.";
+
+        movieVibe.textContent =
+          movie.vibe_poster || "Một bộ phim có phong cách hình ảnh đáng chú ý.";
+
+        renderPoster(movie);
+
+        const hasTmdbDetails = Boolean(movie.tmdb_id && movie.tmdb_media_type);
+
+        detailButton.disabled = !hasTmdbDetails;
+        detailButton.title = hasTmdbDetails
+          ? "Mở thông tin chi tiết"
+          : "Phim này chưa có dữ liệu TMDB";
+
+        watchButton.disabled = !hasTmdbDetails;
+        watchButton.title = hasTmdbDetails
+          ? "Tìm nền tảng đang phát hành phim"
+          : "Phim này chưa có dữ liệu TMDB";
+
+        updateWatchedButtons();
+        updateSaveButton();
+        showState(movieCard);
+      }
+
+      async function randomMovie(request) {
+        if (isLoading) return;
+
+        if (!validateAdvancedFilters()) return;
+        if (!validateExclusionMode()) return;
+
+        const baseMessage = request.trim() || "Random";
+        const message = buildRequestWithAdvancedFilters(baseMessage);
+
+        currentRequest = baseMessage;
+        movieInput.value = baseMessage;
+
+        const history = getRandomExclusionTitles();
+
+        try {
+          setLoading(true);
+
+          const response = await fetch("/api/random", {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+              message,
+              history,
+              exclusions: getExclusionModeValues(),
+            }),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            throw new Error(result.error || "Không thể lấy dữ liệu phim.");
+          }
+
+          renderMovie(result.data);
+          saveToHistory(result.data);
+        } catch (error) {
+          console.error(error);
+
+          errorMessage.textContent =
+            error.message || "Không thể gọi API. Kiểm tra lại server.";
+
+          showState(errorState);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        randomMovie(movieInput.value);
+      });
+
+      document.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          addFilter(button.dataset.filter);
+          movieInput.focus();
+        });
+      });
+
+      advancedFilterToggle.addEventListener("click", () => {
+        toggleAdvancedFilterPanel();
+      });
+
+      exclusionModeToggle.addEventListener("click", () => {
+        toggleExclusionModePanel();
+      });
+
+      applyExclusionModeButton.addEventListener("click", () => {
+        if (!validateExclusionMode()) return;
+
+        saveExclusionMode();
+        renderExclusionModeSummary();
+        toggleExclusionModePanel(false);
+
+        const filters = getExclusionModeValues();
+        const count = getExclusionModeParts().length;
+
+        showToast(
+          filters.enabled
+            ? count
+              ? `Đã áp dụng ${count} mục loại trừ`
+              : "Chế độ loại trừ đang bật nhưng chưa có mục"
+            : "Đã tạm tắt loại trừ cá nhân",
+          filters.enabled ? "🚫" : "⏸️",
+        );
+      });
+
+      resetExclusionModeButton.addEventListener("click", () => {
+        resetExclusionMode();
+        showToast("Đã xóa loại trừ cá nhân", "🧹");
+      });
+
+      [
+        exclusionEnabled,
+        excludeActors,
+        excludeCountries,
+        excludeGenres,
+        excludeYears,
+        excludeKeywords,
+      ].forEach((control) => {
+        control.addEventListener("change", renderExclusionModeSummary);
+
+        control.addEventListener("input", renderExclusionModeSummary);
+      });
+
+      applyAdvancedFiltersButton.addEventListener("click", () => {
+        if (!validateAdvancedFilters()) return;
+
+        saveAdvancedFilters();
+        renderAdvancedFilterSummary();
+        toggleAdvancedFilterPanel(false);
+
+        const count = getAdvancedFilterParts().length;
+        showToast(
+          count ? `Đã áp dụng ${count} bộ lọc` : "Chưa chọn bộ lọc nào",
+          count ? "⚙️" : "ℹ️",
+        );
+      });
+
+      resetAdvancedFiltersButton.addEventListener("click", () => {
+        resetAdvancedFilters();
+        showToast("Đã xóa bộ lọc nâng cao", "🧹");
+      });
+
+      [
+        filterContentType,
+        filterCountry,
+        filterGenre,
+        filterFormat,
+        filterYearFrom,
+        filterYearTo,
+        filterImdb,
+        filterDuration,
+      ].forEach((control) => {
+        control.addEventListener("change", renderAdvancedFilterSummary);
+        control.addEventListener("input", renderAdvancedFilterSummary);
+      });
+
+      clearFilterButton.addEventListener("click", () => {
+        movieInput.value = "Random";
+        resetAdvancedFilters();
+        resetExclusionMode();
+        movieInput.focus();
+        showToast("Đã xóa toàn bộ điều kiện", "🧹");
+      });
+
+      randomAgainButton.addEventListener("click", () => {
+        randomMovie(currentRequest);
+      });
+
+      retryButton.addEventListener("click", () => {
+        randomMovie(currentRequest);
+      });
+
+      trailerButton.addEventListener("click", openTrailerModal);
+
+      trailerCloseButton.addEventListener("click", closeTrailerModal);
+
+      trailerModal
+        .querySelectorAll("[data-trailer-close]")
+        .forEach((element) => {
+          element.addEventListener("click", closeTrailerModal);
+        });
+
+      trailerRetryButton.addEventListener("click", () => {
+        loadTrailer(true);
+      });
+
+      detailButton.addEventListener("click", openDetailModal);
+      watchButton.addEventListener("click", openWatchProviders);
+      detailWatchButton.addEventListener("click", openWatchProviders);
+
+      detailWatchRetryButton.addEventListener("click", () => {
+        loadWatchProviders(true);
+      });
+
+      detailCloseButton.addEventListener("click", closeDetailModal);
+
+      detailModal.querySelectorAll("[data-detail-close]").forEach((element) => {
+        element.addEventListener("click", closeDetailModal);
+      });
+
+      detailRetryButton.addEventListener("click", () => {
+        loadMovieDetails(true);
+      });
+
+      detailTrailerButton.addEventListener("click", openDetailTrailer);
+
+      detailWatchedButton.addEventListener("click", () => {
+        toggleWatchedMovie();
+        updateDetailWatchedButton();
+      });
+
+      detailSaveButton.addEventListener("click", () => {
+        toggleSaveMovie();
+        updateDetailSaveButton();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+
+        if (!trailerModal.classList.contains("hidden")) {
+          closeTrailerModal();
+          return;
+        }
+
+        if (!detailModal.classList.contains("hidden")) {
+          closeDetailModal();
+        }
+      });
+
+      watchedButton.addEventListener("click", () => toggleWatchedMovie());
+
+      saveButton.addEventListener("click", toggleSaveMovie);
+
+      copyButton.addEventListener("click", async () => {
+        if (!currentMovie) return;
+
+        const mainTitle = getDisplayMovieTitle(currentMovie);
+        const subtitle = getMovieSubtitle(currentMovie);
+
+        const movieName = subtitle ? `${mainTitle} (${subtitle})` : mainTitle;
+
+        try {
+          await navigator.clipboard.writeText(movieName);
+          showToast("Đã sao chép tên phim", "📋");
+        } catch {
+          showToast("Không thể sao chép", "⚠️");
+        }
+      });
+
+      clearHistoryButton.addEventListener("click", () => {
+        localStorage.removeItem(HISTORY_KEY);
+        notifySyncStorageChange(HISTORY_KEY);
+        renderHistory();
+        showToast(
+          "Đã xóa lịch sử hiển thị, danh sách chống trùng vẫn được giữ",
+          "🧹",
+        );
+      });
+
+      migrateHistoryToSeenMovies();
+      loadAdvancedFilters();
+      loadExclusionMode();
+      renderHistory();
+      renderWatchedMovies();
+      renderSavedMovies();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-sync.js"></script>
+  </body>
+</html>
